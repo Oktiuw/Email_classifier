@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ### 1. Run the FastAPI backend:
 First, ensure that the model is trained and saved as spam_classifier_model.joblib. Then, start the FastAPI backend with the following command:
 ```
-uvicorn API.main:app --reload
+python -m uvicorn API.main:app --reload
 ```
 This will start the FastAPI app at http://127.0.0.1:8000.
 
@@ -71,5 +71,5 @@ The frontend consists of an HTML form where users can input the email message th
 
 The frontend is built using Flask and is responsive, making it suitable for both desktop and mobile devices.
 ## Author
-Your Name: Aurélien VINCENT
+Aurélien VINCENT
 Contact: vinau02@gmail.com
