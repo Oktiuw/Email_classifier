@@ -44,11 +44,25 @@ pip install -r requirements.txt
 
 ## Usage 
 ### 1. Run the FastAPI backend:
+First, ensure that the model is trained and saved as spam_classifier_model.joblib. Then, start the FastAPI backend with the following command:
+```
+uvicorn API.main:app --reload
+```
+This will start the FastAPI app at http://127.0.0.1:8000.
+
 ### 2. Run the Flask frontend:
+Navigate to the web_interface folder and run:
+
+```
+python Web_interface/app.py
+```
+This will start the Flask web server at http://127.0.0.1:80.
+
+
 ## API 
 The FastAPI backend provides a single endpoint:
 
-/predict (POST)
+#### /predict (POST)
 Input: A JSON object with a single key: "message" (the email text).
 Output: A JSON object with a "label" field that can either be "spam" or "normal."
 
