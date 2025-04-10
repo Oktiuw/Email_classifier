@@ -40,3 +40,6 @@ function updateCharCount() {
 document.addEventListener("DOMContentLoaded", function() {
     updateCharCount(); 
 });
+document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('classify-btn').disabled = true; 
+});
