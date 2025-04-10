@@ -21,12 +21,14 @@
         </div>
         <br>
 
-
         <form method="POST">
             <label for="email_message" id="emailMessageLabel">Enter Email Message:</label>
-            <textarea name="email_message" rows="4" cols="50"></textarea><br>
-            <button type="submit" class="classify-btn">Classify</button>
+            <textarea name="email_message" rows="4" cols="50" id="emailMessage" oninput="updateCharCount()"></textarea><br>
+            <span id="charCount">0</span> / 5000 characters
+            <br>
+            <button type="submit" class="classify-btn" id="classify-btn">Classify</button>
         </form>
+
         <div id="result" class="result" {% if prediction %} style="display:block;" {% else %} style="display:none;" {% endif %}>
             <h2 id="prediction">Prediction : {{ prediction }}</h2>
             <i>This result could not be accurate, be careful</i>
