@@ -27,9 +27,8 @@
             <textarea name="email_message" rows="4" cols="50"></textarea><br>
             <button type="submit" class="classify-btn">Classify</button>
         </form>
-
-        <div id="result" class="result" style="display:none;">
-            <h2 id="prediction">{{ prediction }}</h2>
+        <div id="result" class="result" {% if prediction %} style="display:block;" {% else %} style="display:none;" {% endif %}>
+            <h2 id="prediction">Prediction : {{ prediction }}</h2>
             <i>This result could not be accurate, be careful</i>
         </div>
 
