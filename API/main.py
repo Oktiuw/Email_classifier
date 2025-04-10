@@ -1,7 +1,7 @@
 import re
 from html import escape
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request,HTTPException
 from pydantic import BaseModel
 import joblib
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -9,6 +9,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 limiter = Limiter(key_func=get_remote_address)
+MAX_MESSAGE_LENGTH = 5000
 
 model = joblib.load("Model/spam_classifier_model.joblib")
 vectorizer = joblib.load("Model/tfidf_vectorizer.joblib")
@@ -26,6 +27,8 @@ def clean_input(input_str: str) -> str:
 @app.post("/predict")
 @limiter.limit("1/second")  
 def predict_spam(email: Email,request: Request):
+    if len(email.message) > MAX_MESSAGE_LENGTH:
+        raise HTTPException(status_code=400, detail="Message too long. Maximum 5000 characters allowed.")
     message=clean_input(email.message)
     message_vector = vectorizer.transform([message])
     prediction = model.predict(message_vector)

@@ -82,17 +82,26 @@
             color: red;
             font-weight: bold;
         }
+
+        /* Compteur de caractères */
+        .char-count {
+            font-size: 14px;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Spam Email Classifier</h1>
-        <form method="POST">
+        <form method="POST" onsubmit="return validateMessageLength()">
             <label for="email_message">Enter Email Message:</label>
-            <textarea name="email_message" rows="4" cols="50"></textarea><br>
+            <textarea id="email_message" name="email_message" rows="4" cols="50" maxlength="5000"></textarea><br>
+            <span id="char_count" class="char-count">0/5000 characters</span><br>
             <button type="submit">Classify</button>
         </form>
 
+        <!-- Prediction Result -->
         {% if prediction %}
         <div class="result">
             <h2>Prediction: {{ prediction }}</h2>
@@ -100,11 +109,37 @@
         </div>
         {% endif %}
 
+        <!-- Error Message -->
         {% if error %}
         <div class="error">
             <h2>{{ error }}</h2>
         </div>
         {% endif %}
+
+        <!-- Message too long error -->
+        <div id="error_message" class="error" style="display: none;">
+            <h2>Message is too long! Maximum 5000 characters allowed.</h2>
+        </div>
     </div>
+
+    <script>
+        // Mise à jour du compteur de caractères
+        document.getElementById('email_message').addEventListener('input', function() {
+            var count = this.value.length;
+            document.getElementById('char_count').innerText = count + "/5000 characters";
+        });
+
+        // Validation côté frontend avant envoi
+        function validateMessageLength() {
+            var message = document.getElementById('email_message').value;
+            if (message.length > 5000) {
+                document.getElementById('error_message').style.display = 'block';
+                return false;  // Empêche l'envoi du formulaire
+            } else {
+                document.getElementById('error_message').style.display = 'none';
+                return true;   // Permet l'envoi du formulaire
+            }
+        }
+    </script>
 </body>
 </html>
