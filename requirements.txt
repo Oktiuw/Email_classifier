@@ -3,3 +3,6 @@ uvicorn
 scikit-learn
 joblib
 pandas
+slowapi
+googletrans==4.0.0-rc1
+langdetect
