@@ -6,3 +6,4 @@ pandas
 slowapi
 googletrans==4.0.0-rc1
 langdetect
+python-dotenv
