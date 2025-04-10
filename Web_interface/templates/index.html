@@ -58,16 +58,46 @@
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            margin: 5px;
+            text-align: center;
         }
 
         button:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .language-selector button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 10px;
+        }
+
+        .language-selector button:hover {
+            transform: scale(1.1);
+        }
+
+        .language-selector img {
+            width: 30px;
+            height: 20px;
         }
 
         .result {
@@ -77,52 +107,98 @@
             color: #333;
         }
 
-        /* Styles pour les messages d'erreur */
         .error {
             color: red;
             font-weight: bold;
         }
 
-        /* Compteur de caractères */
         .char-count {
             font-size: 14px;
-            color: #555;
+            color: #777;
         }
 
+        /* Styles pour les messages d'erreur */
+        .error {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Spam Email Classifier</h1>
+    <div class="language-selector">
+        <!-- Boutons avec des drapeaux -->
+        <button id="frBtn" onclick="switchLanguage('fr')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="Français">
+        </button>
+        <button id="enBtn" onclick="switchLanguage('en')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1920px-Flag_of_the_United_Kingdom_%281-2%29.svg.png" alt="English">
+        </button>
+    </div>
+
+    <div class="container" id="container">
+        <h1 id="title">Spam Email Classifier</h1>
         <form method="POST" onsubmit="return validateMessageLength()">
-            <label for="email_message">Enter Email Message:</label>
+            <label for="email_message" id="message_label">Enter Email Message:</label>
             <textarea id="email_message" name="email_message" rows="4" cols="50" maxlength="5000"></textarea><br>
             <span id="char_count" class="char-count">0/5000 characters</span><br>
-            <button type="submit">Classify</button>
+            <button type="submit" id="submit_button">Classify</button>
         </form>
 
         <!-- Prediction Result -->
         {% if prediction %}
         <div class="result">
-            <h2>Prediction: {{ prediction }}</h2>
-            <i>This result could not be accurate, be careful</i>
+            <h2 id="prediction_label">Prediction: {{ prediction }}</h2>
+            <i id="warning_label">This result could not be accurate, be careful</i>
         </div>
         {% endif %}
 
         <!-- Error Message -->
         {% if error %}
         <div class="error">
-            <h2>{{ error }}</h2>
+            <h2 id="error_label">{{ error }}</h2>
         </div>
         {% endif %}
 
         <!-- Message too long error -->
         <div id="error_message" class="error" style="display: none;">
-            <h2>Message is too long! Maximum 5000 characters allowed.</h2>
+            <h2 id="too_long_message">Message is too long! Maximum 5000 characters allowed.</h2>
         </div>
     </div>
 
     <script>
+        // Variables de traduction pour chaque langue
+        const translations = {
+            en: {
+                title: "Spam Email Classifier",
+                message_label: "Enter Email Message:",
+                submit_button: "Classify",
+                prediction_label: "Prediction: ",
+                warning_label: "This result could not be accurate, be careful",
+                error_label: "An error occurred",
+                too_long_message: "Message is too long! Maximum 5000 characters allowed.",
+            },
+            fr: {
+                title: "Classificateur d'Emails Spam",
+                message_label: "Entrez le message de l'email :",
+                submit_button: "Classer",
+                prediction_label: "Prédiction : ",
+                warning_label: "Ce résultat pourrait ne pas être précis, soyez prudent",
+                error_label: "Une erreur s'est produite",
+                too_long_message: "Le message est trop long ! Maximum 5000 caractères autorisés.",
+            }
+        };
+
+        // Fonction pour changer la langue
+        function switchLanguage(language) {
+            document.getElementById('title').innerText = translations[language].title;
+            document.getElementById('message_label').innerText = translations[language].message_label;
+            document.getElementById('submit_button').innerText = translations[language].submit_button;
+            document.getElementById('prediction_label').innerText = translations[language].prediction_label;
+            document.getElementById('warning_label').innerText = translations[language].warning_label;
+            document.getElementById('error_label').innerText = translations[language].error_label;
+            document.getElementById('too_long_message').innerText = translations[language].too_long_message;
+        }
+
         // Mise à jour du compteur de caractères
         document.getElementById('email_message').addEventListener('input', function() {
             var count = this.value.length;
