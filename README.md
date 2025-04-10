@@ -51,7 +51,6 @@ python -m uvicorn API.main:app --reload
 This will start the FastAPI app at http://127.0.0.1:8000.
 
 ### 2. Run the Flask frontend:
-Navigate to the web_interface folder and run:
 
 ```
 python Web_interface/app.py

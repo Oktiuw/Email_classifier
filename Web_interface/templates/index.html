@@ -31,7 +31,7 @@
 
         <div id="result" class="result" {% if prediction %} style="display:block;" {% else %} style="display:none;" {% endif %}>
             <h2 id="prediction">Prediction : {{ prediction }}</h2>
-            <i>This result could not be accurate, be careful</i>
+            <i id="reminder">This result could not be accurate, be careful</i>
         </div>
 
         <div id="error" class="error" style="display:none;">

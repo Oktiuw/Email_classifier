@@ -14,12 +14,14 @@ function setLanguage(language) {
         document.querySelector('button[type="submit"]').innerText = 'Classer';
         document.getElementById('frBtn').style.backgroundColor = '#B7A7A6';
         document.getElementById('enBtn').style.backgroundColor = '';
+        document.getElementById('reminder').innerText = 'Ce résultat peut être inexact, traitez votre mail avec attention';
     } else {
         document.getElementById('title').innerText = 'Email Classifier';
         document.getElementById('emailMessageLabel').innerText = 'Enter Email Message:';
         document.querySelector('button[type="submit"]').innerText = 'Classify';
         document.getElementById('enBtn').style.backgroundColor = '#B7A7A6 ';
         document.getElementById('frBtn').style.backgroundColor = '';
+        document.getElementById('reminder').innerText = 'This result could not be accurate, be careful';
     }
 }
 function updateCharCount() {
